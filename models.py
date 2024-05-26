@@ -52,17 +52,15 @@ class User(db.Model, UserMixin):
 
 class Contact(db.Model):
     id = db.Column(db.String, primary_key = True)
-    firstname = db.Column(db.String(150), nullable = False)
-    lastname = db.Column(db.String(150), nullable = False)
+    name = db.Column(db.String(150), nullable = False)
     email = db.Column(db.String(200))
     phone_number = db.Column(db.String(20))
     address = db.Column(db.String(200))
     user_token = db.Column(db.String, db.ForeignKey('user.token'), nullable = False)
 
-    def __init__(self,first,last,email,phone_number,address,user_token, id = ''):
+    def __init__(self,name,email,phone_number,address,user_token, id = ''):
         self.id = self.set_id()
-        self.firstname = first
-        self.lastname = last
+        self.name = name
         self.email = email
         self.phone_number = phone_number
         self.address = address
@@ -77,7 +75,7 @@ class Contact(db.Model):
 
 class ContactSchema(ma.Schema):
     class Meta:
-        fields = ['id', 'firstname', 'lastname', 'email','phone_number', 'address']
+        fields = ['id', 'name', 'email','phone_number', 'address']
 
 contact_schema = ContactSchema()
 contacts_schema = ContactSchema(many=True)

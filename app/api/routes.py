@@ -11,8 +11,7 @@ def getdata():
 @api.route('/contacts', methods = ['POST'])
 @token_required
 def create_contact(current_user_token):
-    firstname = request.json['first']
-    lastname = request.json['last']
+    name = request.json['name']
     email = request.json['email']
     phone_number = request.json['phone_number']
     address = request.json['address']
@@ -20,7 +19,7 @@ def create_contact(current_user_token):
 
     print(f'BIG TESTER: {current_user_token.token}')
 
-    contact = Contact(firstname, lastname, email, phone_number, address, user_token = user_token)
+    contact = Contact(name, email, phone_number, address, user_token = user_token)
 
     db.session.add(contact)
     db.session.commit()
@@ -48,8 +47,7 @@ def get_single_contact(current_user_token, id):
 @token_required
 def update_contact(current_user_token,id):
     contact = Contact.query.get(id)
-    contact.firstname = request.json['first']
-    contact.lastname = request.json['last']
+    contact.name = request.json['name']
     contact.email = request.json['email']
     contact.phone_number = request.json['phone_number']
     contact.address = request.json['address']
